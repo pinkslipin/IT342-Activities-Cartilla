@@ -24,7 +24,7 @@ public class WebController {
 
     @GetMapping
     public String home() {
-        return "index"; // Renders index.html
+        return "index"; 
     }
 
     @GetMapping("/profile")
@@ -33,7 +33,7 @@ public class WebController {
             return "redirect:/";
         }
         model.addAttribute("user", principal);
-        return "profile"; // Renders profile.html
+        return "profile"; 
     }
 
     @GetMapping("/contacts")
@@ -44,10 +44,10 @@ public class WebController {
         } catch (IOException e) {
             model.addAttribute("error", "Failed to fetch contacts.");
         }
-        return "contacts"; // Renders contacts.html
+        return "contacts"; 
     }
 
-    // ✅ Add Contact
+    //Add Contact
     @PostMapping("/contacts/add")
     public String addContact(@RequestParam String name, @RequestParam String email, @RequestParam String phone, OAuth2AuthenticationToken authentication) {
         try {
@@ -58,7 +58,7 @@ public class WebController {
         return "redirect:/contacts";
     }
 
-    // ✅ Update Contact
+    //Update Contact
     @PostMapping("/contacts/update")
     public String updateContact(@RequestParam String resourceName, @RequestParam String name, @RequestParam String email, @RequestParam String phone, OAuth2AuthenticationToken authentication) {
         try {
@@ -69,7 +69,7 @@ public class WebController {
         return "redirect:/contacts";
     }
 
-    // ✅ Delete Contact
+    //Delete Contact
     @PostMapping("/contacts/delete")
     public String deleteContact(@RequestParam String resourceName, OAuth2AuthenticationToken authentication) {
         try {

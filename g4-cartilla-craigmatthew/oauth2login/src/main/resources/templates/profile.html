@@ -3,10 +3,12 @@
 <head>
     <title>User Profile</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
             padding: 20px;
+            animation: fadeIn 1s ease-in-out;
         }
         h1 {
             color: #333;
@@ -14,6 +16,10 @@
         img {
             border-radius: 50%;
             margin-top: 10px;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            animation: slideIn 0.5s ease-in-out;
         }
         p {
             font-size: 18px;
@@ -23,14 +29,23 @@
             display: inline-block;
             margin: 10px 5px;
             padding: 10px 20px;
-            background-color: #4285F4;
+            background-color: #4CAF50;
             color: white;
             text-decoration: none;
             border-radius: 5px;
             font-size: 16px;
+            transition: background-color 0.3s ease;
         }
         a:hover {
-            background-color: #357ABD;
+            background-color: #45a049;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); }
+            to { transform: translateY(0); }
         }
     </style>
 </head>

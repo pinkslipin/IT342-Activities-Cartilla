@@ -38,7 +38,7 @@ public class GoogleContactsService {
 
         String accessToken = authorizedClient.getAccessToken().getTokenValue();
 
-        // ✅ Use full access scope to allow add, edit, and delete
+        //Use full access scope
         GoogleCredentials credentials = GoogleCredentials.create(new AccessToken(accessToken, null))
                 .createScoped(Collections.singletonList("https://www.googleapis.com/auth/contacts"));
 
@@ -49,7 +49,7 @@ public class GoogleContactsService {
                 .build();
     }
 
-    // ✅ Fetch Google Contacts
+    //Fetch Google Contacts
     public List<Person> getContacts(OAuth2AuthenticationToken authentication) throws IOException {
         PeopleService peopleService = getPeopleService(authentication);
 
@@ -61,7 +61,7 @@ public class GoogleContactsService {
         return response.getConnections() != null ? response.getConnections() : Collections.emptyList();
     }
 
-    // ✅ Create a new Google Contact
+    
     public Person createContact(OAuth2AuthenticationToken authentication, String name, String email, String phone) throws IOException {
         PeopleService peopleService = getPeopleService(authentication);
 
@@ -73,11 +73,11 @@ public class GoogleContactsService {
         return peopleService.people().createContact(person).execute();
     }
 
-    // ✅ Update an existing contact (Fix: Include etag)
+    
     public Person updateContact(OAuth2AuthenticationToken authentication, String resourceName, String newName, String newEmail,String newPhone) throws IOException {
         PeopleService peopleService = getPeopleService(authentication);
 
-        // 🔹 Fetch the existing contact to get the etag
+        //Fetch the existing contact to get the etag
         Person existingContact = peopleService.people().get(resourceName)
                 .setPersonFields("names,emailAddresses,phoneNumbers")
                 .execute();
@@ -97,7 +97,7 @@ public class GoogleContactsService {
                 .execute();
     }
 
-    // ✅ Delete a Google Contact
+    
     public void deleteContact(OAuth2AuthenticationToken authentication, String resourceName) throws IOException {
         PeopleService peopleService = getPeopleService(authentication);
         peopleService.people().deleteContact(resourceName).execute();
