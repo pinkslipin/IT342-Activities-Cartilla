@@ -62,23 +62,24 @@ public class GoogleContactsService {
     }
 
     // ✅ Create a new Google Contact
-    public Person createContact(OAuth2AuthenticationToken authentication, String name, String email) throws IOException {
+    public Person createContact(OAuth2AuthenticationToken authentication, String name, String email, String phone) throws IOException {
         PeopleService peopleService = getPeopleService(authentication);
 
         Person person = new Person()
                 .setNames(Collections.singletonList(new Name().setGivenName(name)))
-                .setEmailAddresses(Collections.singletonList(new EmailAddress().setValue(email)));
+                .setEmailAddresses(Collections.singletonList(new EmailAddress().setValue(email)))
+                .setPhoneNumbers(Collections.singletonList(new PhoneNumber().setValue(phone)));
 
         return peopleService.people().createContact(person).execute();
     }
 
     // ✅ Update an existing contact (Fix: Include etag)
-    public Person updateContact(OAuth2AuthenticationToken authentication, String resourceName, String newName, String newEmail) throws IOException {
+    public Person updateContact(OAuth2AuthenticationToken authentication, String resourceName, String newName, String newEmail,String newPhone) throws IOException {
         PeopleService peopleService = getPeopleService(authentication);
 
         // 🔹 Fetch the existing contact to get the etag
         Person existingContact = peopleService.people().get(resourceName)
-                .setPersonFields("names,emailAddresses")
+                .setPersonFields("names,emailAddresses,phoneNumbers")
                 .execute();
 
         if (existingContact == null) {
@@ -88,10 +89,11 @@ public class GoogleContactsService {
         Person updatedPerson = new Person()
                 .setEtag(existingContact.getEtag())  // Required to prevent conflicts
                 .setNames(Collections.singletonList(new Name().setGivenName(newName)))
-                .setEmailAddresses(Collections.singletonList(new EmailAddress().setValue(newEmail)));
+                .setEmailAddresses(Collections.singletonList(new EmailAddress().setValue(newEmail)))
+                .setPhoneNumbers(Collections.singletonList(new PhoneNumber().setValue(newPhone)));
 
         return peopleService.people().updateContact(resourceName, updatedPerson)
-                .setUpdatePersonFields("names,emailAddresses")
+                .setUpdatePersonFields("names,emailAddresses,phoneNumbers")
                 .execute();
     }
 

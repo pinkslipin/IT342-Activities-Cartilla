@@ -49,9 +49,9 @@ public class WebController {
 
     // ✅ Add Contact
     @PostMapping("/contacts/add")
-    public String addContact(@RequestParam String name, @RequestParam String email, OAuth2AuthenticationToken authentication) {
+    public String addContact(@RequestParam String name, @RequestParam String email, @RequestParam String phone, OAuth2AuthenticationToken authentication) {
         try {
-            googleContactsService.createContact(authentication, name, email);
+            googleContactsService.createContact(authentication, name, email, phone);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,9 +60,9 @@ public class WebController {
 
     // ✅ Update Contact
     @PostMapping("/contacts/update")
-    public String updateContact(@RequestParam String resourceName, @RequestParam String name, @RequestParam String email, OAuth2AuthenticationToken authentication) {
+    public String updateContact(@RequestParam String resourceName, @RequestParam String name, @RequestParam String email, @RequestParam String phone, OAuth2AuthenticationToken authentication) {
         try {
-            googleContactsService.updateContact(authentication, resourceName, name, email);
+            googleContactsService.updateContact(authentication, resourceName, name, email, phone);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -16,12 +16,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/contacts", "/profile").authenticated()
-                        .anyRequest().permitAll())
-                .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("/profile", true)) // Redirect to profile page after login
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests.anyRequest().authenticated())
+                .oauth2Login(oauth2 -> oauth2.defaultSuccessUrl("http://localhost:8080/profile", true))
                 .logout(logout -> logout.logoutSuccessUrl("/"))
+                .formLogin(form -> form.defaultSuccessUrl("/secured", true))
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
